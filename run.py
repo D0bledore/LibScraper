@@ -26,6 +26,12 @@ all_books_data = all_books.get_all_values()
 personal_books = SHEET.worksheet('personal_list')
 personal_books_data = personal_books.get_all_values()
 
+def search_books():
+    pass
+
+def view_personal_list():
+    pass
+
 def display_menu():
     print("\nMenu:")
     print('---------------------------')
@@ -33,3 +39,29 @@ def display_menu():
     print("2: View personal list")
     print("3: Quit")
     print('---------------------------')
+
+def main():
+    '''
+    This function is essentially the Game Loop
+    '''
+    print('\nWelcome to LibScraper, developed by D0bledore')
+    display_menu()
+    while True:
+        print("\nType 'help' to display menu.")
+        choice = input("Enter your choice (1-3):\n").strip()
+
+        if choice == '1':
+            search_books()
+            print('Functionality to implemented yet')
+        elif choice == '2':
+            view_personal_list()
+            print("Functionality not implemented yet.")
+        elif choice == '3':
+            print("Thank you for using the LibScraper. Goodbye!")
+            break
+        elif choice.lower() == 'help':
+            display_menu()
+        else:
+            print(f'You entered "{choice}", which is invalid!')
+
+main()
