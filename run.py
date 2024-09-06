@@ -26,4 +26,10 @@ all_books_data = all_books.get_all_values()
 personal_books = SHEET.worksheet('personal_list')
 personal_books_data = personal_books.get_all_values()
 
-print(personal_books_data)
+def display_menu():
+    print("\nMenu:")
+    print('---------------------------')
+    print("1: Search for books")
+    print("2: View personal list")
+    print("3: Quit")
+    print('---------------------------')
