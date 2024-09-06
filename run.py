@@ -33,15 +33,47 @@ def view_personal_list():
     print("\nYour Personal Book List:")
     print("--------------------------")
 
+    # Update data on local system from the sheet (is a must!)
+    updated_personal_books_data = personal_books.get_all_values()
+
     indx = 0
     # Skip the header row (index 0)
-    for row in personal_books_data[1:]:
+    for row in updated_personal_books_data[1:]:
             indx += 1
             title = row[1]  # Column 2 (index 1) is the title
             author = row[2]  # Column 3 (index 2) is the author
             print(f"{indx}. {title} by {author}")
     
     print("--------------------------")
+    #Functionality to delete a row per desire
+    while True:
+        choice = input("Enter 'del' to delete a book, or press Enter to return to main menu:\n").lower().strip()
+        if choice == 'del':
+            while True:
+                del_choice = input("Enter the number of the book you want to delete or press Enter to return:\n").strip()
+                if del_choice == '':
+                    return # Exit the function
+                try:
+                    del_index = int(del_choice)
+                    if 1 <= del_index <= indx:
+                        # Get row of book to be deleted
+                        deleted_book = updated_personal_books_data[del_index]
+                        # Get title of book to be deleted
+                        deleted_title = deleted_book[1]
+                        author_of_deleted_book = deleted_book[2] 
+                        # Delete row from spreadsheet, which is +1 indexed
+                        personal_books.delete_rows(del_index + 1)
+                        print(f'Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
+                        return  # Exit the function after successful deletion
+                    else:
+                        print(f'"{del_index}" is an invalid book number. Please try again.')
+                except ValueError:
+                    print(f'"{del_choice}" is not a number. Please enter a number.')
+        elif choice == '':
+            return  # Exit the function
+        else:
+            print(f'You entered "{choice}", which is not a valid input!')
+
 
 def display_menu():
     print("\nMenu:")
@@ -63,7 +95,7 @@ def main():
 
         if choice == '1':
             search_books()
-            print('Functionality to implemented yet')
+            print('Functionality yet to be implemented!')
         elif choice == '2':
             view_personal_list()
         elif choice == '3':
