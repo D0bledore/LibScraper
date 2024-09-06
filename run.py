@@ -30,7 +30,18 @@ def search_books():
     pass
 
 def view_personal_list():
-    pass
+    print("\nYour Personal Book List:")
+    print("--------------------------")
+
+    indx = 0
+    # Skip the header row (index 0)
+    for row in personal_books_data[1:]:
+            indx += 1
+            title = row[1]  # Column 2 (index 1) is the title
+            author = row[2]  # Column 3 (index 2) is the author
+            print(f"{indx}. {title} by {author}")
+    
+    print("--------------------------")
 
 def display_menu():
     print("\nMenu:")
@@ -42,7 +53,7 @@ def display_menu():
 
 def main():
     '''
-    This function is essentially the Game Loop
+        This function is essentially the Game Loop
     '''
     print('\nWelcome to LibScraper, developed by D0bledore')
     display_menu()
@@ -55,7 +66,6 @@ def main():
             print('Functionality to implemented yet')
         elif choice == '2':
             view_personal_list()
-            print("Functionality not implemented yet.")
         elif choice == '3':
             print("Thank you for using the LibScraper. Goodbye!")
             break
