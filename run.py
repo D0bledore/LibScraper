@@ -27,19 +27,58 @@ personal_books = SHEET.worksheet('personal_list')
 personal_books_data = personal_books.get_all_values()
 
 def search_books():
-    pass
+    print("\nBook Categories:")
+    print("--------------------------")
+
+    # Update data on local system from sheet
+    updated_all_books_data = all_books.get_all_values()
+
+    # Create a dictionary to store categories and their books: title and author 
+    dictionary_books = {} 
+
+    # Skip the header row (index 0) and Loop through book_list worksheet
+    for row in updated_all_books_data[1:]:
+
+        # Assign rows to variables  
+        category, title, author = row[0], row[1], row[2]
+
+        # Creates a category if it does not exist
+        if category not in dictionary_books:
+            dictionary_books[category] = []
+        
+        # Add book to the category's list inside Loop
+        dictionary_books[category].append(f"{title} by {author}")
+
+    # Sort keys alphabetically and assign to new variable
+    categories = sorted(dictionary_books.keys())
+
+    # Initialize counter for numbered list
+    indx = 0
+    # Display categories variable
+    for category in categories:
+        indx += 1
+        print(f'{indx}. {category}')
+
+    print("--------------------------")
+    # Testing that the dictionary has been correctly populated
+    print(dictionary_books)
+
+    
 
 def view_personal_list():
     print("\nYour Personal Book List:")
     print("--------------------------")
 
-    # Update data on local system from the sheet (is a must!)
+    # Update data on local system from the sheet
     updated_personal_books_data = personal_books.get_all_values()
 
     indx = 0
-    # Skip the header row (index 0)
+    # Skip the header row (index 0) and Loop through personal_list worksheet
     for row in updated_personal_books_data[1:]:
+            # Initialize counter for numbered list
             indx += 1
+
+            # Assign rows to variables
             title = row[1]  # Column 2 (index 1) is the title
             author = row[2]  # Column 3 (index 2) is the author
             print(f"{indx}. {title} by {author}")
@@ -84,9 +123,8 @@ def display_menu():
     print('---------------------------')
 
 def main():
-    '''
-        This function is essentially the Game Loop
-    '''
+        # This function is essentially the Game Loop
+
     print('\nWelcome to LibScraper, developed by D0bledore')
     display_menu()
     while True:
@@ -95,11 +133,10 @@ def main():
 
         if choice == '1':
             search_books()
-            print('Functionality yet to be implemented!')
         elif choice == '2':
             view_personal_list()
         elif choice == '3':
-            print("Thank you for using the LibScraper. Goodbye!")
+            print("Thank you for using the LibScraper. Goodbye!") 
             break
         elif choice.lower() == 'help':
             display_menu()
