@@ -60,9 +60,38 @@ def search_books():
         print(f'{indx}. {category}')
 
     print("--------------------------")
-    # Testing that the dictionary has been correctly populated
-    print(dictionary_books)
 
+    # This Code block will Loop until valid number input for category selection (or 'q' to quit)
+    while True:
+        choice = input("Enter the number of the category you want to explore (or 'q' to quit):\n").strip().lower()
+        if choice == 'q':
+            return # Exit the function
+        
+        # Try to convert input to integer, ValueError if not possible
+        try:
+            choice = int(choice)
+
+            # Check if choice is within range of categories
+            if 1 <= choice <= len(categories):
+                selected_category = categories[choice - 1]
+                # Print the name of the selected category
+                print(f"\nBooks in {selected_category}:")
+                print("--------------------------")
+                # Initialize counter for numbered list
+                indx = 0
+                # Display all books inside category list
+                for book in dictionary_books[selected_category]:
+                    indx += 1
+                    print(f"{indx}. {book}")
+                break
+            # Print this if input out of range
+            else:
+                print("Invalid number. Please try again.")
+        # If convert to integer not possible, print this
+        except ValueError:
+            print("Please enter a valid number or 'q' to quit.")
+
+    print("--------------------------")
     
 
 def view_personal_list():
