@@ -27,8 +27,6 @@ personal_books = SHEET.worksheet('personal_list')
 personal_books_data = personal_books.get_all_values()
 
 def search_books():
-    print("\nBook Categories:")
-    print("--------------------------")
 
     # Update data on local system from sheet
     updated_all_books_data = all_books.get_all_values()
@@ -44,7 +42,7 @@ def search_books():
         # Assign rows to variables  
         category, title, author = row[0], row[1], row[2]
 
-        # Creates a category if it does not exist
+        # Creates a list variable for each category if it does not exist
         if category not in dictionary_books:
             dictionary_books[category] = []
         
@@ -58,46 +56,80 @@ def search_books():
     # Sort keys alphabetically and assign to new variable
     categories = sorted(dictionary_books.keys())
 
-    # Initialize counter for numbered list
-    indx = 0
-    # Display categories variable
-    for category in categories:
-        indx += 1
-        print(f'{indx}. {category}')
-
-    print("--------------------------")
-
-    # This Code block will Loop until valid number input for category selection (or 'q' to quit)
-    while True:
-        choice = input("Enter the number of the category you want to explore (or 'q' to quit):\n").strip().lower()
-        if choice == 'q':
-            return # Exit the function
+    # This Code block will Loop until the user no longer wants to add 'take'* (*add) any books anymore from the "library" (book_list worksheet) to his personal_list worksheet
+    while True: 
+        print("\nBook Categories:")
+        print("--------------------------")
+        # Initialize counter for numbered list
+        indx = 0
+        # Display all categories
+        for category in categories:
+            indx += 1
+            print(f'{indx}. {category}')
         
-        # Try to convert input to integer, ValueError if not possible
-        try:
-            choice = int(choice)
+        print("--------------------------")
 
-            # Check if choice is within range of categories
-            if 1 <= choice <= len(categories):
-                selected_category = categories[choice - 1]
-                # Print the name of the selected category
-                print(f"\nBooks in {selected_category}:")
-                print("--------------------------")
-                # Initialize counter for numbered list
-                indx = 0
-                # Display all books inside category list
-                for book in dictionary_books[selected_category]:
-                    indx += 1
-                    print(f"{indx}. {book['title']} by {book['author']}")
-                break
-            # Print this if input out of range
-            else:
-                print(f'"{choice}" is an invalid category number. Please try again.')
-        # If convert to integer not possible, print this
-        except ValueError:
-            print(f'"{choice}" is not a number. Please enter a number.')
+        # This Code block will Loop until valid number input for a category has been selected (or 'q' to quit)
+        while True:
+            category_choice = input("Enter the number of the category you want to explore (or 'q' to quit):\n").strip().lower()
+            if category_choice == 'q':
+                return # Exit the function
+            
+            # Try to convert input to integer, ValueError if not possible
+            try:
+                category_choice = int(category_choice)
+                
+                # Check if choice is within range of categories then display all books in category and wait for user input
+                if 1 <= category_choice <= len(categories):
+                    selected_category = categories[category_choice - 1]
+  
+                    # This code block will Loop until valid number input for a book has been selected (or 'q' to quit)
+                    while True: 
+                        # Print the name of the selected category
+                        print(f"\nBooks in {selected_category}:")
+                        print("--------------------------")
+                        # Initialize counter for numbered list
+                        indx = 0
+                        # Display all books inside category list
+                        for book in dictionary_books[selected_category]:
+                            indx += 1
+                            print(f"{indx}. {book['title']} by {book['author']}")
+                        print("--------------------------")
 
-    print("--------------------------")
+                        book_choice = input("\nPress Enter to return to category selection (or 'q' to quit)\nEnter the number of the book you want to add:\n").strip().lower()
+                        if book_choice == '':
+                            break  # Exit inner Loop
+                        elif book_choice == 'q':
+                            return # Exit the function
+                        try:
+                            book_choice = int(book_choice)
+                            if 1 <= book_choice <= len(dictionary_books[selected_category]):
+                                selected_book = dictionary_books[selected_category][book_choice - 1]
+                                # Get selected book variables
+                                category = selected_category
+                                title = selected_book['title']
+                                author = selected_book['author']
+                                # Create new row with selected book variables
+                                new_row = [category, title, author]
+                                personal_books.append_row(new_row)
+                                print(f'"{title} by {author}" has been added to your personal list.')
+
+                                add_another = input("Do you want to add another book? (y/n): ").strip().lower()
+                                if add_another != 'y':
+                                    return  # Exit the function if the user doesn't want to add another book
+                            else:
+                                print(f'"\n{book_choice}" is an invalid book number. Please try again.')
+                        except ValueError:
+                            print(f'"\n{book_choice}" is not a number. Please enter a number.')
+                    break # Exit and return to category selection
+                # Print this if input out of range
+                else:
+                    print(f'"\n{category_choice}" is an invalid category number. Please try again.')
+            # If convert to integer not possible, print this
+            except ValueError:
+                print(f'"\n{category_choice}" is not a number. Please enter a number.')
+
+        print("--------------------------")
     
 
 def view_personal_list():
@@ -140,13 +172,13 @@ def view_personal_list():
                         print(f'Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
                         return  # Exit the function after successful deletion
                     else:
-                        print(f'"{del_index}" is an invalid book number. Please try again.')
+                        print(f'"\n{del_index}" is an invalid book number. Please try again.')
                 except ValueError:
-                    print(f'"{del_choice}" is not a number. Please enter a number.')
+                    print(f'"\n{del_choice}" is not a number. Please enter a number.')
         elif choice == '':
             return  # Exit the function
         else:
-            print(f'You entered "{choice}", which is not a valid input!')
+            print(f'\nYou entered "{choice}", which is not a valid input!')
 
 
 def display_menu():
@@ -176,6 +208,6 @@ def main():
         elif choice.lower() == 'help':
             display_menu()
         else:
-            print(f'You entered "{choice}", which is invalid!')
+            print(f'\nYou entered "{choice}", which is invalid!')
 
 main()
