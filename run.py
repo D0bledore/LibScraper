@@ -36,9 +36,11 @@ def search_books():
     # Create a dictionary to store categories and their books: title and author 
     dictionary_books = {} 
 
+    # Initialize counter for numbered list
+    indx = 0
     # Skip the header row (index 0) and Loop through book_list worksheet
     for row in updated_all_books_data[1:]:
-
+        indx += 1
         # Assign rows to variables  
         category, title, author = row[0], row[1], row[2]
 
@@ -47,7 +49,11 @@ def search_books():
             dictionary_books[category] = []
         
         # Add book to the category's list inside Loop
-        dictionary_books[category].append(f"{title} by {author}")
+        dictionary_books[category].append({
+            "title": title,
+            "author": author,
+            "row_index": indx
+        })
 
     # Sort keys alphabetically and assign to new variable
     categories = sorted(dictionary_books.keys())
@@ -82,14 +88,14 @@ def search_books():
                 # Display all books inside category list
                 for book in dictionary_books[selected_category]:
                     indx += 1
-                    print(f"{indx}. {book}")
+                    print(f"{indx}. {book['title']} by {book['author']}")
                 break
             # Print this if input out of range
             else:
-                print("Invalid number. Please try again.")
+                print(f'"{choice}" is an invalid category number. Please try again.')
         # If convert to integer not possible, print this
         except ValueError:
-            print("Please enter a valid number or 'q' to quit.")
+            print(f'"{choice}" is not a number. Please enter a number.')
 
     print("--------------------------")
     
