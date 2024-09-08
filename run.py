@@ -138,7 +138,8 @@ def view_personal_list():
 
     # Update data on local system from the sheet
     updated_personal_books_data = personal_books.get_all_values()
-
+    
+    # Initialize counter for numbered list        
     indx = 0
     empty_list = True  # Flag to check if the entire personal list is empty
 
@@ -164,7 +165,7 @@ def view_personal_list():
     print("--------------------------")
     
     #Functionality to delete a row per desire
-    while True:
+    while not empty_list:
         choice = input("Enter 'del' to delete a book, or press Enter to return to main menu:\n").lower().strip()
         if choice == 'del':
             while True:
