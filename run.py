@@ -96,7 +96,7 @@ def search_books():
                     # This code block will Loop until valid number input for a book has been selected (or 'q' to quit)
                     while True: 
 
-                        book_choice = input("\nOptions: [Enter] for more categories, [q] to quit, or type the book number to add: ").strip().lower()
+                        book_choice = input("\nOptions:\n [Enter] for more categories, [q] to quit, or type the book number to add:\n").strip().lower()
                         if book_choice == '':
                             break  # Exit inner Loop
                         elif book_choice == 'q':
@@ -114,7 +114,7 @@ def search_books():
                                 personal_books.append_row(new_row)
                                 print(f'"{title} by {author}" has been added to your personal list.')
 
-                                add_another = input("Great! If you'd like to add another book, simply enter 'y'!").strip().lower()
+                                add_another = input("\nGreat! If you'd like to add another book, simply enter 'y'!\n").strip().lower()
                                 if add_another != 'y':
                                     return  # Exit the function if the user doesn't want to add another book
                             else:
@@ -140,17 +140,29 @@ def view_personal_list():
     updated_personal_books_data = personal_books.get_all_values()
 
     indx = 0
+    empty_list = True  # Flag to check if the entire personal list is empty
+
     # Skip the header row (index 0) and Loop through personal_list worksheet
     for row in updated_personal_books_data[1:]:
-            # Initialize counter for numbered list
-            indx += 1
+        # Check if the title (second column) is empty
+        if row[1].strip() == '':
+            continue  # Skip this row if title is empty
 
-            # Assign rows to variables
-            title = row[1]  # Column 2 (index 1) is the title
-            author = row[2]  # Column 3 (index 2) is the author
-            print(f"{indx}. {title} by {author}")
+        # If we reach here, we have a non-empty title
+        empty_list = False
+        # Initialize counter for numbered list        
+        indx += 1
+
+        title = row[1]  # Column 2 (index 1) is the title
+        author = row[2]  # Column 3 (index 2) is the author
+        print(f"{indx}. {title} by {author}")
+
+    # After the loop, check if the list was entirely empty
+    if empty_list:
+        print("It's empty...")
     
     print("--------------------------")
+    
     #Functionality to delete a row per desire
     while True:
         choice = input("Enter 'del' to delete a book, or press Enter to return to main menu:\n").lower().strip()
