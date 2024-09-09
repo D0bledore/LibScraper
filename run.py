@@ -96,7 +96,7 @@ def search_books():
                     # This code block will Loop until valid number input for a book has been selected (or 'q' to quit)
                     while True: 
 
-                        book_choice = input("\nOptions:\n [Enter] for more categories, [q] to quit, or type the book number to add:\n").strip().lower()
+                        book_choice = input("\nOptions:\n[Enter] for more categories, [q] to quit, or type the book number to add:\n").strip().lower()
                         if book_choice == '':
                             break  # Exit inner Loop
                         elif book_choice == 'q':
@@ -114,7 +114,7 @@ def search_books():
                                 personal_books.append_row(new_row)
                                 print(f'"{title} by {author}" has been added to your personal list.')
 
-                                add_another = input("\nGreat! If you'd like to add another book, simply enter 'y'!\n").strip().lower()
+                                add_another = input("\nIf you'd like to add another book, simply enter 'y'!\n").strip().lower()
                                 if add_another != 'y':
                                     return  # Exit the function if the user doesn't want to add another book
                             else:
@@ -166,10 +166,10 @@ def view_personal_list():
     
     #Functionality to delete a row per desire
     while not empty_list:
-        choice = input("Enter 'del' to delete a book, or press Enter to return to main menu:\n").lower().strip()
-        if choice == 'del':
+        choice = input("Enter 'd' to delete a book, or press Enter to return home:\n").lower().strip()
+        if choice == 'd':
             while True:
-                del_choice = input("Enter the number of the book you want to delete or press Enter to return:\n").strip()
+                del_choice = input("\nEnter the number of the book you want to delete or press Enter to exit:\n").strip()
                 if del_choice == '':
                     return # Exit the function
                 try:
@@ -195,7 +195,7 @@ def view_personal_list():
 
 
 def display_menu():
-    print("\nMenu:")
+    print("\nOptions:")
     print('---------------------------')
     print("1: Search for books in library")
     print("2: View personal list")
@@ -204,10 +204,12 @@ def display_menu():
 
 def main():
         # This function is essentially the Game Loop
-
     print('\nWelcome to LibScraper, developed by D0bledore')
     display_menu()
     while True:
+        print("------")
+        print(" HOME:")
+        print("------")
         print("\nType 'help' to display options.")
         choice = input("Enter your choice (1-3):\n").strip()
 
@@ -216,7 +218,9 @@ def main():
         elif choice == '2':
             view_personal_list()
         elif choice == '3':
-            print("Thank you for using the LibScraper. Goodbye!") 
+            print("----------------------------------------------")
+            print("Thank you for using the LibScraper. Goodbye!")
+            print("----------------------------------------------")
             break
         elif choice.lower() == 'help':
             display_menu()
