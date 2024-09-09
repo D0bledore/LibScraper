@@ -26,6 +26,14 @@ all_books_data = all_books.get_all_values()
 personal_books = SHEET.worksheet('personal_list')
 personal_books_data = personal_books.get_all_values()
 
+# Helper function to check if book exists before adding
+def book_exists_in_personal_list(title, author):
+    personal_books_data = personal_books.get_all_values()
+    for row in personal_books_data[1:]:  # Skip header row
+        if row[1].lower() == title.lower() and row[2].lower() == author.lower():
+            return True
+    return False
+
 def search_books():
 
     # Update data on local system from sheet
@@ -105,14 +113,20 @@ def search_books():
                             book_choice = int(book_choice)
                             if 1 <= book_choice <= len(dictionary_books[selected_category]):
                                 selected_book = dictionary_books[selected_category][book_choice - 1]
+
                                 # Get selected book variables
                                 category = selected_category
                                 title = selected_book['title']
                                 author = selected_book['author']
-                                # Create new row with selected book variables
-                                new_row = [category, title, author]
-                                personal_books.append_row(new_row)
-                                print(f'-----------------------------------------\n{title} by {author}\n-----------------------------------------\nhas been added to your personal list.')
+
+                                #Helper function to prevent duplicates
+                                if book_exists_in_personal_list(title, author):
+                                    print(f"-----------------------------------------\n{title} by {author}\n-----------------------------------------\nis already in your personal list.")
+                                else:
+                                    # Create new row with selected book variables
+                                    new_row = [category, title, author]
+                                    personal_books.append_row(new_row)
+                                    print(f'-----------------------------------------\n{title} by {author}\n-----------------------------------------\nhas been added to your personal list.')
 
                                 add_another = input("\nIf you'd like to add another book, simply enter 'y'!\n").strip().lower()
                                 if add_another != 'y':
@@ -172,11 +186,14 @@ def delete_book():
         try:
             del_index = int(del_choice)
             if 1 <= del_index <= len(updated_personal_books_data) - 1:
-                # Get row of book to be deleted
+
+                # Get book data at the specified index
                 deleted_book = updated_personal_books_data[del_index]
-                # Get title of book to be deleted
+
+                # Get title and author of book to be deleted
                 deleted_title = deleted_book[1]
                 author_of_deleted_book = deleted_book[2] 
+
                 # Delete row from spreadsheet, which is +1 indexed
                 personal_books.delete_rows(del_index + 1)
                 print(f'Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
@@ -231,5 +248,6 @@ def main():
             display_menu()
         else:
             print(f'\nYou entered "{choice}", which is not a valid option!')
+
 
 main()
