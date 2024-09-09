@@ -96,7 +96,7 @@ def search_books():
                     # This code block will Loop until valid number input for a book has been selected (or 'q' to quit)
                     while True: 
 
-                        book_choice = input("\nOptions:\n[Enter] for more categories, [q] to quit, or type the book number to add:\n").strip().lower()
+                        book_choice = input("\nOptions:\n- [Enter] for more categories\n- [q] to quit\n\nType the number of the book to add:\n").strip().lower()
                         if book_choice == '':
                             break  # Exit inner Loop
                         elif book_choice == 'q':
@@ -112,7 +112,7 @@ def search_books():
                                 # Create new row with selected book variables
                                 new_row = [category, title, author]
                                 personal_books.append_row(new_row)
-                                print(f'"{title} by {author}" has been added to your personal list.')
+                                print(f'-----------------------------------------\n{title} by {author}\n-----------------------------------------\nhas been added to your personal list.')
 
                                 add_another = input("\nIf you'd like to add another book, simply enter 'y'!\n").strip().lower()
                                 if add_another != 'y':
@@ -131,12 +131,13 @@ def search_books():
 
         print("--------------------------")
     
-
+# Function to update and see current personal_list worksheet 
 def view_personal_list():
     print("\nYour Personal Book List:")
     print("--------------------------")
 
     # Update data on local system from the sheet
+    global updated_personal_books_data
     updated_personal_books_data = personal_books.get_all_values()
     
     # Initialize counter for numbered list        
@@ -157,41 +158,33 @@ def view_personal_list():
         title = row[1]  # Column 2 (index 1) is the title
         author = row[2]  # Column 3 (index 2) is the author
         print(f"{indx}. {title} by {author}")
-
-    # After the loop, check if the list was entirely empty
-    if empty_list:
-        print("It's empty...")
-    
+  
     print("--------------------------")
-    
-    #Functionality to delete a row per desire
-    while not empty_list:
-        choice = input("Enter 'd' to delete a book, or press Enter to return home:\n").lower().strip()
-        if choice == 'd':
-            while True:
-                del_choice = input("\nEnter the number of the book you want to delete or press Enter to exit:\n").strip()
-                if del_choice == '':
-                    return # Exit the function
-                try:
-                    del_index = int(del_choice)
-                    if 1 <= del_index <= indx:
-                        # Get row of book to be deleted
-                        deleted_book = updated_personal_books_data[del_index]
-                        # Get title of book to be deleted
-                        deleted_title = deleted_book[1]
-                        author_of_deleted_book = deleted_book[2] 
-                        # Delete row from spreadsheet, which is +1 indexed
-                        personal_books.delete_rows(del_index + 1)
-                        print(f'Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
-                        return  # Exit the function after successful deletion
-                    else:
-                        print(f'\n"{del_index}" is an invalid book number. Please try again.')
-                except ValueError:
-                    print(f'\n"{del_choice}" is not a number. Please enter a number.')
-        elif choice == '':
-            return  # Exit the function
-        else:
-            print(f'\nYou entered "{choice}", which is not a valid input!')
+
+    return empty_list
+
+# Functionality to delete a book entry from the personal_list worksheet
+def delete_book():
+    while True:
+        del_choice = input("\nPlease enter the number of the book you want to delete \npress Enter to exit:\n").strip()
+        if del_choice == '':
+            return # Exit the function
+        try:
+            del_index = int(del_choice)
+            if 1 <= del_index <= len(updated_personal_books_data) - 1:
+                # Get row of book to be deleted
+                deleted_book = updated_personal_books_data[del_index]
+                # Get title of book to be deleted
+                deleted_title = deleted_book[1]
+                author_of_deleted_book = deleted_book[2] 
+                # Delete row from spreadsheet, which is +1 indexed
+                personal_books.delete_rows(del_index + 1)
+                print(f'Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
+                return True 
+            else:
+                print(f'\n"{del_index}" is an invalid book number. Please try again.')
+        except ValueError:
+            print(f'\n"{del_choice}" is not a number. Please enter a number.')
 
 
 def display_menu():
@@ -216,7 +209,19 @@ def main():
         if choice == '1':
             search_books()
         elif choice == '2':
-            view_personal_list()
+            while True:
+                empty_list = view_personal_list()
+                if empty_list:
+                    print("Personal book list is empty. Exiting...")
+                    break # Return home 
+
+                choice = input("\nIf you want to delete a book, enter 'd':\n").lower().strip()
+                if choice == 'd':
+                    deleted = delete_book() #returns True when deletion successful
+                    if deleted: 
+                        continue  # Refresh personal_list and repeat input so user can decide to delete another book
+                else:
+                    break  # Exit the program
         elif choice == '3':
             print("----------------------------------------------")
             print("Thank you for using the LibScraper. Goodbye!")
