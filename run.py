@@ -1,7 +1,7 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
-
+import os
 
 #This code is referenced from the Love Sandwiches - Essential Project
 #BEGIN of ref.
@@ -25,6 +25,11 @@ all_books_data = all_books.get_all_values()
 
 personal_books = SHEET.worksheet('personal_list')
 personal_books_data = personal_books.get_all_values()
+
+
+#Helper function to clean-up the terminal so things don't get messy ref: https://www.geeksforgeeks.org/clear-screen-python/
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Helper function to check if book exists before adding
 def book_exists_in_personal_list(title, author):
