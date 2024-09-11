@@ -214,6 +214,7 @@ def delete_book():
         view_personal_list()
         del_choice = input("\nPlease enter the number of the book you want to delete \nor press Enter to exit:\n").strip()
         if del_choice == '':
+            clear()
             return # Exit the function
         try:
             del_index = int(del_choice)
@@ -271,6 +272,8 @@ def main():
                     deleted = delete_book() #returns True when deletion successful
                     if deleted: 
                         continue  # Refresh personal_list and repeat input so user can decide to delete another book
+                    else:
+                        break
                 elif choice == '':
                     clear()
                     break # Exit the program
