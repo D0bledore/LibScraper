@@ -39,26 +39,51 @@ def book_exists_in_personal_list(title, author):
             return True
     return False
 
-# Function which displays all the books in the given category choice from the books_list worksheet
-def display_books_in_category(category_choice, categories, dictionary_books):
-                
-    # Check if choice is within range of categories then display all books within that category
-    if 1 <= category_choice <= len(categories):
-        selected_category = categories[category_choice - 1]
-        # Print the name of the selected category
-        print(f"\nBooks in {selected_category}:")
+# Function to display all categories in book_list worksheet
+def display_all_categories(categories):
+        print("\nBook Categories:")
         print("--------------------------")
         # Initialize counter for numbered list
         indx = 0
-        # Display all books inside selected category list
-        for book in dictionary_books[selected_category]:
+        # Displays all categories
+        for category in categories:
             indx += 1
-            print(f"{indx}. {book['title']} by {book['author']}")
-        print("--------------------------")
-    # Print this if category_choice out of range
-    else:
-        print(f"\n{category_choice} is an invalid category number. Please try again.")
-    return selected_category
+            print(f'{indx}. {category}')
+        
+        print("--------------------------")   
+
+# Function which displays all the books in the given category choice from the books_list worksheet
+def get_books_in_category(category_choice, categories, dictionary_books):
+    if category_choice == 'q':
+        clear()
+        return # Exit the function
+    # Try to convert input to integer, ValueError if not possible
+    try:
+        category_choice = int(category_choice)
+        # Check if choice is within range of categories then display all books within that category
+        if 1 <= category_choice <= len(categories):
+            selected_category = categories[category_choice - 1]
+            print(f"\nBooks in {selected_category}:")
+            print("--------------------------")
+            # Initialize counter for numbered list
+            indx = 0
+            # Display all books inside selected category list
+            for book in dictionary_books[selected_category]:
+                indx += 1
+                print(f"{indx}. {book['title']} by {book['author']}")
+            print("--------------------------")
+            return selected_category
+        # Print this if category_choice out of range
+        else:
+            clear()
+            print(f'\nError: "{category_choice}" is an invalid category number. Please try again.')
+    # If convert to integer not possible, print this
+    except ValueError:
+        clear()
+        print(f'\nError: "{category_choice}" is not a number. Please enter a number.')
+
+            
+
         
 
 def search_books():
@@ -91,36 +116,21 @@ def search_books():
     # Sort keys alphabetically and assign to new variable
     categories = sorted(dictionary_books.keys())
 
-
-    # This Code block will Loop until the user no longer wants to take any books from the "library" (book_list worksheet) anymore and add it to his personal_list worksheet
-    while True: 
-        print("\nBook Categories:")
-        print("--------------------------")
-        # Initialize counter for numbered list
-        indx = 0
-        # Displays all categories
-        for category in categories:
-            indx += 1
-            print(f'{indx}. {category}')
-        
-        print("--------------------------")
-
-
+    while True:        
+        display_all_categories(categories)
         category_choice = input("Enter the number of the category you want to explore (or 'q' to quit):\n").strip().lower()
-        if category_choice == 'q':
-            return # Exit the function
+        clear()
+        selected_category = get_books_in_category(category_choice, categories, dictionary_books)
 
-        # Try to convert input to integer, ValueError if not possible
-        try:
-            category_choice = int(category_choice)
-            
-            # This code block will Loop until until user no longer wants to add any books anymore
-            while True: 
-                selected_category = display_books_in_category(category_choice, categories, dictionary_books)
+        # This code block will Loop until until user no longer wants to add any books anymore
+        if selected_category:
+            while True:
                 book_choice = input("\nOptions:\n- [Enter] for more categories\n- [q] to quit\n\nType the number of the book to add to your personal list:\n").strip().lower()
                 if book_choice == '':
+                    clear()
                     break  # Exit and return to category selection
                 elif book_choice == 'q':
+                    clear()
                     return # Exit the function
                 try:
                     book_choice = int(book_choice)
@@ -132,27 +142,39 @@ def search_books():
                         author = selected_book['author']
                         #Helper function to prevent duplicates
                         if book_exists_in_personal_list(title, author):
+                            clear()
+                            print('\nALREADY EXISTS:')
                             print(f"-----------------------------------------\n{title} by {author}\n-----------------------------------------\nis already in your personal list.")
                         else:
                             # Create new row with selected book variables
                             new_row = [category, title, author]
                             personal_books.append_row(new_row)
+                            clear()
+                            print('\nADDED:')
                             print(f'-----------------------------------------\n{title} by {author}\n-----------------------------------------\nhas been added to your personal list.')
-                        add_another = input("\nIf you'd like to add another book, simply enter 'y'!\n").strip().lower()
-                        if add_another != 'y':
-                            display_books_in_category(category_choice, categories, dictionary_books)
-                            return  # Exit the function if the user doesn't want to add another book
+                        while True:
+                            add_another = input("\nIf you'd like to add another book, simply enter 'y'!\nor press Enter to exit:\n").strip().lower()
+                            if add_another == '':
+                                clear()
+                                return  # Exit the function if the user doesn't want to add another book
+                            elif add_another == 'y':
+                                clear()
+                                get_books_in_category(category_choice, categories, dictionary_books)
+                                break
+                            else: 
+                                clear()
+                                print(f'\nError: "{add_another}" is not a valid option.\n\nOptions:\n- [Enter] to exit\n- [y] to add another book')
                     else:
-                        print(f'\n"{book_choice}" is an invalid book number. Please try again.')
+                        clear()
+                        # displays all books in category
+                        get_books_in_category(category_choice, categories, dictionary_books)
+                        print(f'\nError: "{book_choice}" is an invalid book number. Please try again.')
                 except ValueError:
-                    print(f'\n"{book_choice}" is not a number. Please enter a number.')
-            
-        # If convert to integer not possible, print this
-        except ValueError:
-            print(f'\n"{category_choice}" is not a number. Please enter a number.')
+                    clear()
+                    # displays all books in category
+                    get_books_in_category(category_choice, categories, dictionary_books)
+                    print(f'\nError: "{book_choice}" is not a number. Please enter a number.')
 
-        print("--------------------------")
-    
 # Function to update and see current personal_list worksheet 
 def view_personal_list():
     print("\nYour Personal Book List:")
@@ -187,8 +209,10 @@ def view_personal_list():
 
 # Functionality to delete a book entry from the personal_list worksheet
 def delete_book():
+    clear()
     while True:
-        del_choice = input("\nPlease enter the number of the book you want to delete \npress Enter to exit:\n").strip()
+        view_personal_list()
+        del_choice = input("\nPlease enter the number of the book you want to delete \nor press Enter to exit:\n").strip()
         if del_choice == '':
             return # Exit the function
         try:
@@ -204,58 +228,64 @@ def delete_book():
 
                 # Delete row from spreadsheet, which is +1 indexed
                 personal_books.delete_rows(del_index + 1)
-                print(f'Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
+                clear()
+                print(f'\nDELETED: Book on row {del_index}: "{deleted_title} by {author_of_deleted_book}" has been deleted.')
                 return True 
             else:
-                print(f'\n"{del_index}" is an invalid book number. Please try again.')
+                clear()
+                print(f'\nError: "{del_index}" is an invalid book number. Please try again.')
         except ValueError:
-            print(f'\n"{del_choice}" is not a number. Please enter a number.')
+            clear()
+            print(f'\nError: "{del_choice}" is not a number. Please enter a number.')
 
 
 def display_menu():
-    print("\nOptions:")
+    print("\nThe HOME Menu:")
     print('---------------------------')
-    print("1: Search for books in library")
-    print("2: View personal list")
-    print("3: Quit")
+    print("Option 1: Search for books in the library")
+    print("Option 2: View personal book list")
+    print("Option 3: Quit")
     print('---------------------------')
 
 def main():
         # This function is essentially the Game Loop
+    clear()
     print('\nWelcome to LibScraper, developed by D0bledore')
-    display_menu()
     while True:
-        print("-------")
-        print(" HOME:")
-        print("-------")
-        print("\nType 'help' to display options.")
-        choice = input("Enter your choice (1-3):\n").strip()
+        display_menu()
+        choice = input("Enter your choice (number 1-3):\n\n").strip()
 
         if choice == '1':
+            clear()
             search_books()
         elif choice == '2':
+            clear()
             while True:
                 empty_list = view_personal_list()
                 if empty_list:
-                    print("Personal book list is empty. Exiting...")
+                    print("\nWhoops! Your personal book list is empty.\n\n")
                     break # Return home 
 
-                choice = input("\nIf you want to delete a book, enter 'd':\n").lower().strip()
+                choice = input("\nOptions:\n- [Enter] to exit\n- [d] to delete a book from your list\n").lower().strip()
                 if choice == 'd':
                     deleted = delete_book() #returns True when deletion successful
                     if deleted: 
                         continue  # Refresh personal_list and repeat input so user can decide to delete another book
-                else:
-                    break  # Exit the program
+                elif choice == '':
+                    clear()
+                    break # Exit the program
+                else: 
+                    clear()
+                    print(f'\nError: "{choice}" is not a valid option.')
         elif choice == '3':
+            clear()
             print("----------------------------------------------")
             print("Thank you for using the LibScraper. Goodbye!")
             print("----------------------------------------------")
             break
-        elif choice.lower() == 'help':
-            display_menu()
         else:
-            print(f'\nYou entered "{choice}", which is not a valid option!')
+            clear()
+            print(f'\nError: You entered "{choice}", which is not a valid option!')
 
 
 main()
