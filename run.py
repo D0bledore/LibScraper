@@ -144,8 +144,8 @@ def search_books():
                     book_choice = int(book_choice)
                     if 1 <= book_choice <= len(dictionary_books
                                                [selected_category]):
-                        selected_book = dictionary_books[selected_category]\
-                                        [book_choice - 1]
+                        selected_book = (dictionary_books[selected_category]
+                                         [book_choice - 1])
                         # Get selected book variables
                         category = selected_category
                         title = selected_book['title']
@@ -165,8 +165,8 @@ def search_books():
                             clear()
                             print('\nADDED:')
                             print(f'-----------------------------------------'
-                                  f'\n{title} by {author}\n--------------------'
-                                  '---------------------\nhas been added to '
+                                  f'\n{title} by {author}\n-------------------'
+                                  '----------------------\nhas been added to '
                                   'your personal list.')
                         while True:
                             add_another = input("\nIf you'd like to add "
