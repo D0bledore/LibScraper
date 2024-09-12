@@ -58,9 +58,6 @@ def display_all_categories(categories):
 
 # Display all the books in the given category choice
 def get_books_in_category(category_choice, categories, dictionary_books):
-    if category_choice == 'q':
-        clear()
-        return  # Exit the function
     # Try to convert input to integer, ValueError if not possible
     try:
         category_choice = int(category_choice)
@@ -81,12 +78,12 @@ def get_books_in_category(category_choice, categories, dictionary_books):
         else:
             clear()
             print(f'\nError: "{category_choice}" is an invalid category'
-                  'number. Please try again.')
+                  ' number. Please try again.')
     # If convert to integer not possible, print this
     except ValueError:
         clear()
         print(f'\nError: "{category_choice}" is not a number.'
-              'Please enter a number.')
+              ' Please enter a number.')
 
 
 def search_books():
@@ -122,7 +119,10 @@ def search_books():
     while True:
         display_all_categories(categories)
         category_choice = input("Enter the number of the category you want to"
-                                "explore (or 'q' to quit):\n").strip().lower()
+                                " explore (or 'q' to quit):\n").strip().lower()
+        if category_choice == 'q':
+            clear()
+            return  # Exit the function
         clear()
         selected_category = get_books_in_category(category_choice, categories,
                                                   dictionary_books)
@@ -132,7 +132,7 @@ def search_books():
             while True:
                 book_choice = input("\nOptions:\n- [Enter] for more categories"
                                     "\n- [q] to quit\n\nType the number of the"
-                                    "book to add"
+                                    " book to add "
                                     "to your personal list:\n").strip().lower()
                 if book_choice == '':
                     clear()
@@ -144,8 +144,8 @@ def search_books():
                     book_choice = int(book_choice)
                     if 1 <= book_choice <= len(dictionary_books
                                                [selected_category]):
-                        selected_book = dictionary_books[selected_category]
-                        [book_choice - 1]
+                        selected_book = dictionary_books[selected_category]\
+                                        [book_choice - 1]
                         # Get selected book variables
                         category = selected_category
                         title = selected_book['title']
@@ -155,7 +155,7 @@ def search_books():
                             clear()
                             print('\nALREADY EXISTS:')
                             print(f"-----------------------------------------"
-                                  "\n{title} by {author}\n-------------------"
+                                  f"\n{title} by {author}\n-------------------"
                                   "----------------------\n"
                                   "is already in your personal list.")
                         else:
@@ -165,13 +165,13 @@ def search_books():
                             clear()
                             print('\nADDED:')
                             print(f'-----------------------------------------'
-                                  '\n{title} by {author}\n--------------------'
-                                  '---------------------\nhas been added to'
+                                  f'\n{title} by {author}\n--------------------'
+                                  '---------------------\nhas been added to '
                                   'your personal list.')
                         while True:
-                            add_another = input("\nIf you'd like to add"
+                            add_another = input("\nIf you'd like to add "
                                                 "another book, simply enter"
-                                                "'y'"
+                                                " 'y'"
                                                 "!\nor press Enter to exit:"
                                                 "\n").strip().lower()
                             if add_another == '':
@@ -187,22 +187,22 @@ def search_books():
                             else:
                                 clear()
                                 print(f'\nError: "{add_another}" is not a'
-                                      'valid option.\n\nOptions:\n- [Enter]'
-                                      'to exit\n- [y] to add another book')
+                                      ' valid option.\n\nOptions:\n- [Enter]'
+                                      ' to exit\n- [y] to add another book')
                     else:
                         clear()
                         # displays all books in category
                         get_books_in_category(category_choice, categories,
                                               dictionary_books)
                         print(f'\nError: "{book_choice}" is an invalid book'
-                              'number. Please try again.')
+                              ' number. Please try again.')
                 except ValueError:
                     clear()
                     # displays all books in category
                     get_books_in_category(category_choice, categories,
                                           dictionary_books)
                     print(f'\nError: "{book_choice}" is not a number.'
-                          'Please enter a number.')
+                          ' Please enter a number.')
 
 
 # Function to update and see current personal_list worksheet
@@ -244,7 +244,7 @@ def delete_book():
     while True:
         view_personal_list()
         del_choice = input("\nPlease enter the number of the book you want to"
-                           "delete \nor press Enter to exit:\n").strip()
+                           " delete \nor press Enter to exit:\n").strip()
         if del_choice == '':
             clear()
             return  # Exit the function
@@ -262,17 +262,17 @@ def delete_book():
                 # Delete row from spreadsheet, which is +1 indexed
                 personal_books.delete_rows(del_index + 1)
                 clear()
-                print(f'\nDELETED: Book on row {del_index}: "{deleted_title}'
-                      'by {author_of_deleted_book}" has been deleted.')
+                print(f'\nDELETED:\nBook on row {del_index}: "{deleted_title}'
+                      f' by {author_of_deleted_book}"\nhas been deleted.')
                 return True
             else:
                 clear()
                 print(f'\nError: "{del_index}" is an invalid book number.'
-                      'Please try again.')
+                      ' Please try again.')
         except ValueError:
             clear()
             print(f'\nError: "{del_choice}" is not a number.'
-                  'Please enter a number.')
+                  ' Please enter a number.')
 
 
 def display_menu():
@@ -304,7 +304,7 @@ def main():
                     break  # Return home
 
                 choice = input("\nOptions:\n- [Enter] to exit\n- [d] to delete"
-                               "a book from your list\n").lower().strip()
+                               " a book from your list\n").lower().strip()
                 if choice == 'd':
                     deleted = delete_book()  # Returns True when del successful
                     if deleted:
@@ -326,7 +326,7 @@ def main():
         else:
             clear()
             print(f'\nError: You entered "{choice}", which is not a'
-                  'valid option!')
+                  ' valid option!')
 
 
 main()
