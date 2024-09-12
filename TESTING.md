@@ -98,9 +98,9 @@ If the personal list is empty, the program will detect this condition, inform th
 
 **Issue**: The f-string functionality was lost when using multiple lines for a print statement.
 
-    ![screenshot](documentation/bugs/f_string_on_new_line_code.png)
+![screenshot](documentation/bugs/f_string_on_new_line_code.png)
 
-    ![screenshot](documentation/bugs/f_string_on_new_line.png)
+![screenshot](documentation/bugs/f_string_on_new_line.png)
 
 **Solution**: The 'f' prefix was added to each line of the multi-line print statement. This ensures that all lines are properly interpreted as f-strings, maintaining the intended string formatting throughout the statement. 
 
