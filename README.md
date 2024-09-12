@@ -20,7 +20,7 @@ source: [amiresponsive](https://ui.dev/amiresponsive?url=https://libscraper-7100
 
 ### Existing Features
 
-**Home Menu**
+#### Home Menu
 
 The Home Menu serves as the central hub, presenting users with three main options: 
 
@@ -32,57 +32,57 @@ After completing an action (such as adding or deleting a book), users are automa
 
 ![screenshot](documentation/browsers/browser-firefox-home.png)
 
-**Category Selection**
+#### Category Selection
 
 When users choose option 1 from the Home Menu, they are presented with a list of book categories. These categories are alphabetically sorted for easy navigation.
 
 ![screenshot](documentation/browsers/browser-firefox-search.png)
 
-**Book Selection**
+#### Book Selection
 
 Each category contains multiple books. Users can select a book by entering its corresponding index number from the displayed list.
 
 ![screenshot](documentation/features/book_select_19th.png)
 
-**Adding a book**
+#### Adding a book
 
 Upon entering a valid index number, the program confirms that the chosen book has been added to the user's personal list.
 
 ![screenshot](documentation/features/add.png)
 
-**Duplicate Prevention**
+#### Duplicate Prevention
 
 To maintain list integrity, the program informs users if they attempt to add a book that already exists in their personal list.By design, the program cannot create duplicates.
 
 ![screenshot](documentation/features/duplicate.png)
 
-**Viewing Personal List**
+#### Viewing Personal List
 
 Users can view their curated list of books by selecting option 2 from the Home Menu.
 
 ![screenshot](documentation/features/view.png)
 
-**Deleting a Book**
+#### Deleting a Book
 
 To refine their personal list, users can delete books. After choosing to delete, they can select which book to remove or exit the deletion process.
 
 ![screenshot](documentation/features/deleting.png)
 
 
-**Empty List Handling**
+#### Empty List Handling
 
 The program detects when the personal list is empty and prevents users from attempting to delete books from an empty list. This occurs when viewing an empty list or after deleting the last book.
 
 ![screenshot](documentation/features/empty_list.png)
 
 
-**User-Friendly Navigation**
+#### User-Friendly Navigation
 
 LibScraper's strength lies in its intuitive navigation. Users can easily toggle between category and book selection. After adding a book, they're prompted to continue adding more, returning to their previous location in the book selection process. Pressing 'enter' during book selection allows for quick navigation back to category selection. 
 
 ![screenshot](documentation/features/ux.png)
 
-**Program Termination**
+#### Program Termination
 
 When user chooses to quit, the program displays a farewell message before shutting down.
 
