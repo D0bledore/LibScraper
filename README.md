@@ -103,9 +103,9 @@ The most significant drawback of the current implementation is its reliance on a
 
 **Proposed Solutions**
 
-1. Individual User Accounts: Implement a system where users can register and log in to personal accounts.
-2. Dedicated Worksheets: Create individual worksheets for each user, allowing for truly personal book lists.
-3. Scalable Database Solution: Transition from Google Sheets to a more robust database system, such as SQL, to handle increased user load and data management.
+1. Individual User Accounts: Implementing a system where users can register and log in to personal accounts.
+2. Dedicated Worksheets: Creating individual worksheets for each user, allowing for truly personal book lists.
+3. Scalable Database Solution: Transitioning from Google Sheets to a more robust database system, such as SQL, to handle increased user load and data management.
 
 **Benefits**
 
@@ -115,7 +115,7 @@ The most significant drawback of the current implementation is its reliance on a
 
 #### Web-Based Application
 
-To address the limitations of the current terminal-based system, consider developing a web-based version of LibScraper. This would offer several advantages: 
+To address the limitations of the current terminal-based system, I would consider developing a web-based version of LibScraper. This would offer several advantages: 
 
 - Enhanced accessibility across devices
 - Improved user interface and experience
@@ -131,7 +131,7 @@ The library currently contains approximately 80 books across 13 categories.
 
 **Future Vision**
 
-Significantly increase the number of books and categories to create a more comprehensive and diverse library experience. 
+Significantly increasing the number of books and categories to create a more comprehensive and diverse library experience. 
 
 **Benefits**
 
@@ -142,7 +142,7 @@ Significantly increase the number of books and categories to create a more compr
 
 **Concept**
 
-Transform LibScraper from a book list generator to a full-fledged digital library. 
+Transforming LibScraper from a book list generator to a full-fledged digital library. 
 
 **Implementation**
 
@@ -151,7 +151,7 @@ Transform LibScraper from a book list generator to a full-fledged digital librar
 
 #### Potential Business Model
 
-- Transition from a free tool to a subscription-based service
+- Transitioning from a free tool to a subscription-based service
 - Target audience: Book lovers and academic researchers
 - Unique selling point: Curated collection of influential books from the past 2000 years
 
