@@ -78,11 +78,6 @@ If the personal list is empty, the program will detect this condition, inform th
 
 **Solution**: A helper function was implemented to compare the title and author of a selected book against all books already in the personal list. If a match is found, the function returns True, skipping the addition process and notifying the user. This prevents duplicate entries and maintains the integrity of the personal list.
 
-![screenshot](documentation/bugs/prevent_duplicate_succesful.png) 
-
-
-
-
 4. **'q' Not Exiting Category Selection**
 
 **Issue**: The 'q' option failed to exit the user from the category selection process as intended.
