@@ -32,6 +32,10 @@ Here, users can view their curated book collection. The flowchart illustrates ho
 
 This simply ends the application gracefully.
 
+**DISCLAIMER**
+
+While the flowchart provides a solid overview of LibScraper's core functionality, the application offers more intuitive navigation, allowing users to seamlessly toggle between category selection and book selection. This enhanced navigation is further detailed in the Features section below. Additionally, the system includes comprehensive input validation to ensure all user inputs are handled correctly. These validation processes are not depicted in the flowchart but are thoroughly covered in the [TESTING.md](TESTING.md) file.
+
 ## Features
 
 ### Existing Features
