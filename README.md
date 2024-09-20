@@ -12,9 +12,25 @@ The virtual library currently features approximately 80 books across 13 categori
 
 LibScraper is designed for individuals interested in discovering significant books and compiling a personalized reading list. The tool's appeal lies in its ability to introduce users to important works they might not have encountered otherwise.
 
-![screenshot](documentation/mockup.png)
+## Flowchart 
 
-source: [amiresponsive](https://ui.dev/amiresponsive?url=https://libscraper-7100e2e6aa6a.herokuapp.com)
+**A detailed blueprint of LibScraper’s architecture**
+
+The flowchart showcases the program’s primary functionalities and the pathways users can take within the application. It begins with the Main Menu, where users can choose to Search for Books, View Personal List, or Quit the application.
+
+![screenshot](documentation/flowchart.png)
+
+**Search for Books**:
+
+This branch guides users through selecting a category, viewing books within that category, and adding desired books to their personal list. It includes decision points to check for duplicate entries and offers the option to add multiple books sequentially without returning to the main menu each time.
+
+**View Personal List**:
+
+Here, users can view their curated book collection. The flowchart illustrates how the program handles empty lists by notifying the user or allows them to delete books, with the flexibility to remove multiple entries in one session.
+
+**Quit**:
+
+This simply ends the application gracefully.
 
 ## Features
 
