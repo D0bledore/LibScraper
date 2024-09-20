@@ -34,7 +34,7 @@ This simply ends the application gracefully.
 
 **DISCLAIMER**
 
-While the flowchart provides a solid overview of LibScraper's core functionality, the application offers more intuitive navigation, allowing users to seamlessly toggle between category selection and book selection. This enhanced navigation is further detailed in the Features section below. Additionally, the system includes comprehensive input validation to ensure all user inputs are handled correctly. These validation processes are not depicted in the flowchart but are thoroughly covered in the [TESTING.md](TESTING.md) file.
+While the flowchart provides a comprehensive overview of LibScraper's core functionalities, the application includes more intuitive navigation options—such as quitting during an action and seamlessly toggling between category and book selections—that would complicate the flowchart if depicted. These enhanced navigation features are detailed in the [Features section](#features) below. Additionally, the system incorporates extensive input validation to ensure all user inputs are correctly handled. These validation processes are not shown in the flowchart but are thoroughly covered in the [TESTING.md](TESTING.md) file.
 
 ## Features
 
